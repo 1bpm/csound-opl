@@ -555,5 +555,3 @@ void csnd::on_load(csnd::Csound *csound) {
     csnd::plugin<oplpanic>(csound, "oplpanic", csnd::thread::i);
     csnd::plugin<oplbanknames>(csound, "oplbanknames", csnd::thread::i);
 }
-
-

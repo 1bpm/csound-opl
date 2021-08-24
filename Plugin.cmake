@@ -1,4 +1,4 @@
-set(PLUGIN_NAME adlmidi)
+set(PLUGIN_NAME opl)
 set(INCLUDES "include" ${CSOUND_INCLUDE_DIRS})
 set(LIBS "")
 
