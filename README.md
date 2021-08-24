@@ -83,8 +83,10 @@ ___oplnote__ ioplhandle, ichannel, inote, ivelocity_
 * ivelocity : midi note velocity (0 - 127)
 
 
-### iop1, iop2, iop3, iop4 oplinstrument ioplhandle, kmode12, kmode34, kfbk12, kfbk34, k4op, kpseudo4op, kdeepvib, kdeeptrem
+### oplinstrument
 Modify the current instrument parameters and obtain handles to all four operators (oscillators) for further manipulation with the oploperator opcode.
+
+_iop1, iop2, iop3, iop4 __oplinstrument__ ioplhandle, kmode12, kmode34, kfbk12, kfbk34, k4op, kpseudo4op, kdeepvib, kdeeptrem_
 
 * iop1, iop2, iop3, iop4 : handles for the individual operators to be used by the oploperator opcode.
 
@@ -99,8 +101,10 @@ Modify the current instrument parameters and obtain handles to all four operator
 * kdeeptrem : global deep tremolo (0 = off, 1 = on)
 
 
-### oploperator iop, klevel, kscale, kattack, kdecay, ksustain, krelease, kwave, kfreqmul, ktrem, kvib, ksus, kenv
+### oploperator
 Alter individual operator parameters. Out of range parameters will wrap around.
+
+___oploperator__ iop, klevel, kscale, kattack, kdecay, ksustain, krelease, kwave, kfreqmul, ktrem, kvib, ksus, kenv_
 
 * iop : handle for the specific operator as provided by the oplinstrument opcode
 * klevel : gain level (0 - 63)
@@ -118,55 +122,69 @@ Alter individual operator parameters. Out of range parameters will wrap around.
 
 
 
-### oplpanic ioplhandle
+### oplpanic
 Terminate all current notes and reset the opl instance.
+
+___oplpanic__ ioplhandle_
 
 * ioplhandle : handle created by the opl opcode
 
 
-### Sbanks[] oplbanknames ioplhandle
+### oplbanknames
 Obtain all of the bank names compiled into libADLMIDI. The indexes returned can be
 used by the oplsetbank opcode accordingly.
+
+_Sbanks[] __oplbanknames__ ioplhandle_
 
 * Sbanks[] : array of bank names
 
 * ioplhandle : handle created by the opl opcode
 
 
-### oplsetbank ioplhandle, ibank
+### oplsetbank
 Set the current bank (sound set) for the given opl instance. Any playing notes will be 
 stopped and the instance will be reset (may cause a click if audio is playing).
+
+___oplsetbank__ ioplhandle, ibank_
 
 * ioplhandle : handle created by the opl opcode
 * ibank : the bank index (corresponds to the output of oplbanknames
 
 
-### oplpatchchange ioplhandle, kchannel, kpatch
+### oplpatchchange
 Set the patch for the specified channel.
+
+___oplpatchchange__ ioplhandle, kchannel, kpatch_
 
 * ioplhandle : handle created by the opl opcode
 * kchannel : channel index (0 - 15)
 * kpatch : patch index (0 - 127)
 
 
-### oplpitchbend ioplhandle, kchannel, kbend
+### oplpitchbend
 Set the pitch bend value for the specified channel.
+
+___oplpitchbend__ ioplhandle, kchannel, kbend_
 
 * ioplhandle : handle created by the opl opcode
 * kchannel : channel index (0 - 15)
 * kbend : bend amount in semitones (may be positive or negative)
 
 
-### oplaftertouch ioplhandle, kchannel, kaftertouch
+### oplaftertouch
 Set the aftertouch value for the specified channel.
+
+___oplaftertouch__ ioplhandle, kchannel, kaftertouch_
 
 * ioplhandle : handle created by the opl opcode
 * kchannel : channel index (0 - 15)
 * kaftertouch : aftertouch amount (0 - 127)
 
 
-### oplcontrolchange ioplhandle, kchannel, kcontrol, kvalue
+### oplcontrolchange
 Set a control change value for a specified channel.
+
+___oplcontrolchange__ ioplhandle, kchannel, kcontrol, kvalue_
 
 * ioplhandle : handle created by the opl opcode
 * kchannel : channel index (0 - 15)
