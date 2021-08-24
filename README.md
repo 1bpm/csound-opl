@@ -60,8 +60,10 @@ There is also a [demonstration video](http://plugins.csound.1bpm.net/files/vid/o
 
 ## Opcode reference
 
-### ioplhandle, aleft, aright opl [iemulation=0, irunatpcmrate=0]
+### opl
 Create an instance of the emulated OPL3 synthesiser.
+
+####ioplhandle, aleft, aright opl [iemulation=0, irunatpcmrate=0]
 
 * ioplhandle : handle to be used in other opcodes to control synthesis
 * aleft, aright : stereo audio outputs
@@ -161,7 +163,7 @@ Set the aftertouch value for the specified channel.
 * kaftertouch : aftertouch amount (0 - 127)
 
 
-## oplcontrolchange ioplhandle, kchannel, kcontrol, kvalue
+### oplcontrolchange ioplhandle, kchannel, kcontrol, kvalue
 Set a control change value for a specified channel.
 
 * ioplhandle : handle created by the opl opcode
