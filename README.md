@@ -72,8 +72,10 @@ _ioplhandle, aleft, aright __opl__ [iemulation=0, irunatpcmrate=0]_
 * irunatpcmrate : run emulation at PCM rate; setting to 1 may reduce CPU usage but lessen emulation accuracy
 
 
-### oplnote ioplhandle, ichannel, inote, ivelocity
+### oplnote
 Play a note using the synthesiser specified by ioplhandle.
+
+_ __oplnote__ ioplhandle, ichannel, inote, ivelocity_
 
 * ioplhandle : handle created by the opl opcode
 * ichannel : channel for playback (0 - 15)
