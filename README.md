@@ -63,7 +63,7 @@ There is also a [demonstration video](http://plugins.csound.1bpm.net/files/vid/o
 ### opl
 Create an instance of the emulated OPL3 synthesiser.
 
-####ioplhandle, aleft, aright opl [iemulation=0, irunatpcmrate=0]
+_ioplhandle, aleft, aright opl [iemulation=0, irunatpcmrate=0]_
 
 * ioplhandle : handle to be used in other opcodes to control synthesis
 * aleft, aright : stereo audio outputs
