@@ -75,7 +75,7 @@ _ioplhandle, aleft, aright __opl__ [iemulation=0, irunatpcmrate=0]_
 ### oplnote
 Play a note using the synthesiser specified by ioplhandle.
 
-_ __oplnote__ ioplhandle, ichannel, inote, ivelocity_
+___oplnote__ ioplhandle, ichannel, inote, ivelocity_
 
 * ioplhandle : handle created by the opl opcode
 * ichannel : channel for playback (0 - 15)
