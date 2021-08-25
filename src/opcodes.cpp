@@ -321,6 +321,7 @@ struct oplnote : csnd::InPlug<4> {
     
     int deinit() {
         adl_rt_noteOff(session->device, channel, note);
+        return OK;
     }
 };
 
