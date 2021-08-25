@@ -2,23 +2,37 @@
 <CsOptions>
 -odac
 -+rtmidi=virtual -M0
+-m0
 </CsOptions>
-; ==============================================
 <CsInstruments>
+/*
+    csound-opl example 0
+    FLTK gui for instrument editing
 
-sr	=	44100
+    Richard Knight 2021 : examples are licensed as public domain equivalent : http://unlicense.org/
+
+*/
+
+sr = 44100
 kr = 4410
-nchnls	=	2
-0dbfs	=	1
+nchnls = 2
+0dbfs = 1
 seed 0 
 
+; operator parameters and handles
 gkop[][] init 4, 12
 giop[][] init 4, 12
+
+; global instrument parameters and handles
 gkinstr[] init 8
 giinstr[] init 8
+
+; GUI spacing variables
 giopwidth = 200
 gidiv = 60
 
+
+; FLTK GUI objects for an operator
 opcode operator, 0, i
     iop xin
     ix = giopwidth * iop
@@ -39,33 +53,18 @@ opcode operator, 0, i
 
 endop
 
-opcode randomise, 0, 0
-    iop = 0
-    while (iop < 4) do
-        FLsetVal_i random(30, 63), giop[iop][0]
-        FLsetVal_i random(0, 3), giop[iop][1]
-        FLsetVal_i random(0, 15), giop[iop][2]
-        FLsetVal_i random(0, 15), giop[iop][3]
-        FLsetVal_i random(0, 15), giop[iop][4]
-        FLsetVal_i random(0, 15), giop[iop][5]
-        FLsetVal_i random(0, 7), giop[iop][6]
-        FLsetVal_i random(0, 15), giop[iop][7]
-        FLsetVal_i random(0, 1), giop[iop][8]
-        FLsetVal_i random(0, 1), giop[iop][9]
-        FLsetVal_i random(0, 1), giop[iop][10]
-        FLsetVal_i random(0, 1), giop[iop][11]
-        iop += 1
-    od
-    FLsetVal_i random(0, 7), giinstr[2]
-    FLsetVal_i random(0, 7), giinstr[3]
-endop
 
+; run the GUI
 instr gui
     FLpanel "OPL3", 1000, 768
+
+        ; operator columns
         operator 0
         operator 1
         operator 2
         operator 3
+
+        ; global column
         ix = 800
         iy = 0
         ihl FLbox "Globals", 1, 2, 14, giopwidth, 30, ix, iy
@@ -81,12 +80,48 @@ instr gui
         knull1, inull1 FLbutton "Panic", 1, 0, 1, giopwidth, 30, ix, iy+(gidiv*6), 0, nstrnum("panic"), 0, 1
     FLpanelEnd
     FLrun
+
+    ; initially, hide the last two operators (ie non four-operator mode)
     event_i "i", "fouropset", 0, 1, 0
 endin
 
 
+; audio processing
+instr main	
 
+    ; the synthesiser
+    giopl, aL, aR opl
+    outs aL, aR
+
+    ; get operator handles and set the global instrument parameters from the FLTK widgets
+    iop1, iop2, iop3, iop4 oplinstrument giopl, gkinstr[0], gkinstr[1], gkinstr[2], gkinstr[3], gkinstr[4], gkinstr[5], gkinstr[6], gkinstr[7]
+
+    ; set the operator parameters from the FLTK widgets
+    oploperator iop1, gkop[0][0], gkop[0][1], gkop[0][2], gkop[0][3], gkop[0][4], gkop[0][5], gkop[0][6], gkop[0][7], gkop[0][8], gkop[0][9], gkop[0][10], gkop[0][11]
+    oploperator iop2, gkop[1][0], gkop[1][1], gkop[1][2], gkop[1][3], gkop[1][4], gkop[1][5], gkop[1][6], gkop[1][7], gkop[1][8], gkop[1][9], gkop[1][10], gkop[1][11]
+    oploperator iop3, gkop[2][0], gkop[2][1], gkop[2][2], gkop[2][3], gkop[2][4], gkop[2][5], gkop[2][6], gkop[2][7], gkop[2][8], gkop[2][9], gkop[2][10], gkop[2][11]
+    oploperator iop4, gkop[3][0], gkop[3][1], gkop[3][2], gkop[3][3], gkop[3][4], gkop[3][5], gkop[3][6], gkop[3][7], gkop[3][8], gkop[3][9], gkop[3][10], gkop[3][11]
+
+endin
+
+
+; respond to realtime MIDI input accordingly
+instr 1
+    inote notnum
+    iveloc veloc
+    oplnote giopl, 0, inote, iveloc
+endin
+
+
+; panic: reset the opl instance
+instr panic
+    oplpanic giopl
+endin
+
+
+; to be called when the '4OP' or 'Pseudo 4OP' buttons are pressed
 instr fouroptrig
+    ; elicit the state and call the set instrument
     kstate = 0
     if (gkinstr[4] == 1 || gkinstr[5] == 1) then
         kstate = 1
@@ -95,6 +130,8 @@ instr fouroptrig
     turnoff
 endin
 
+
+; show/hide the last two operators depending on the value of p4
 instr fouropset
     istate = p4
     iop = 2
@@ -113,50 +150,30 @@ instr fouropset
     od
 endin
 
+
+; randomise slider values. NB does not actually work for the check boxes but they are still in here
 instr randomiser
-    randomise
+    iop = 0
+    while (iop < 4) do
+        FLsetVal_i random(30, 63), giop[iop][0]
+        FLsetVal_i random(0, 3), giop[iop][1]
+        FLsetVal_i random(0, 15), giop[iop][2]
+        FLsetVal_i random(0, 15), giop[iop][3]
+        FLsetVal_i random(0, 15), giop[iop][4]
+        FLsetVal_i random(0, 15), giop[iop][5]
+        FLsetVal_i random(0, 7), giop[iop][6]
+        FLsetVal_i random(0, 15), giop[iop][7]
+        FLsetVal_i random(0, 1), giop[iop][8]
+        FLsetVal_i random(0, 1), giop[iop][9]
+        FLsetVal_i random(0, 1), giop[iop][10]
+        FLsetVal_i random(0, 1), giop[iop][11]
+        iop += 1
+    od
+    FLsetVal_i random(0, 7), giinstr[2]
+    FLsetVal_i random(0, 7), giinstr[3]
     turnoff
 endin
 
-instr main	
-    giopl, aL, aR opl 5
-    outs aL, aR
-
-    
-    iop1, iop2, iop3, iop4 oplinstrument giopl, gkinstr[0], gkinstr[1], gkinstr[2], gkinstr[3], gkinstr[4], gkinstr[5], gkinstr[6], gkinstr[7]
-
-
-    ; level, keyscale, attack, decay
-    kattack init 2
-    kdecay init 13
-
-    oploperator iop1, gkop[0][0], gkop[0][1], gkop[0][2], gkop[0][3], gkop[0][4], gkop[0][5], gkop[0][6], gkop[0][7], gkop[0][8], gkop[0][9], gkop[0][10], gkop[0][11]
-    oploperator iop2, gkop[1][0], gkop[1][1], gkop[1][2], gkop[1][3], gkop[1][4], gkop[1][5], gkop[1][6], gkop[1][7], gkop[1][8], gkop[1][9], gkop[1][10], gkop[1][11]
-    oploperator iop3, gkop[2][0], gkop[2][1], gkop[2][2], gkop[2][3], gkop[2][4], gkop[2][5], gkop[2][6], gkop[2][7], gkop[2][8], gkop[2][9], gkop[2][10], gkop[2][11]
-    oploperator iop4, gkop[3][0], gkop[3][1], gkop[3][2], gkop[3][3], gkop[3][4], gkop[3][5], gkop[3][6], gkop[3][7], gkop[3][8], gkop[3][9], gkop[3][10], gkop[3][11]
-
-endin
-
-
-instr 2
-    ;inotes[] fillarray 48, 52, 53, 57, 60, 64, 65, 69
-    ;inote = 56;inotes[int(random(0, lenarray(inotes)-1))]-36
-    oplnote giopl, 0, 60, 120
-    oplnote giopl, 0, 64, 120
-    oplnote giopl, 0, 65, 120
-    oplnote giopl, 0, 69, 120
-
-endin
-
-instr 1
-    inote notnum
-    iveloc veloc
-    oplnote giopl, 0, inote, iveloc
-endin
-
-instr panic
-    oplpanic giopl
-endin
 
 
 </CsInstruments>
