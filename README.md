@@ -149,7 +149,7 @@ stopped and the instance will be reset (may cause a click if audio is playing).
 ___oplsetbank__ ioplhandle, ibank_
 
 * ioplhandle : handle created by the opl opcode
-* ibank : the bank index (corresponds to the output of oplbanknames
+* ibank : the bank index (corresponds to the output of oplbanknames)
 
 
 ### oplpatchchange
