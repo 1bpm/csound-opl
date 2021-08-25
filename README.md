@@ -55,8 +55,8 @@ Once the oplinstrument opcode is used for a particular opl instance, it will swi
 
 
 ## Examples
-Some examples are provided in the examples directory, including a FLTK gui for editing instruments. 
-There is also a [demonstration video](http://plugins.csound.1bpm.net/files/vid/opl-demo1.mp4) of the FLTK editor.
+Four examples are provided in the examples directory, including a FLTK gui for editing instruments. 
+There is also a [demonstration video](http://plugins.csound.1bpm.net/files/vid/opl-demo1.mp4) of the FLTK editor, and [another video](http://plugins.csound.1bpm.net/files/vid/opl-demo2.mp4) showing all four examples.
 
 
 ## Opcode reference
