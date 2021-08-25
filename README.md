@@ -21,7 +21,7 @@ which are compiled into ADLMIDI/libADLMIDI - many are custom banks extracted fro
 * [libADLMIDI](https://github.com/Wohlstand/libADLMIDI)
 
 
-Tested on Linux with Csound 6.17 as of writing.
+Tested on Linux with Csound 6.17 and libADLMIDI 1.5.0.1 as of writing.
 
 ## Installation
 Create a build directory at the top of the source tree, execute *cmake ..*, *make* and optionally *make install* as root. If the latter is not used/possible then the resulting library can be used with the *--opcode-lib* flag in Csound.
